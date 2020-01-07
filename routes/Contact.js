@@ -1,5 +1,6 @@
 const db = require('../models'); 
 const bodyParser = require('body-parser');
+const validate = require("../app_modules/validate");
 
 module.exports = function(app) {
   app.get('/api/contacts', (req, res) => {
@@ -13,12 +14,32 @@ module.exports = function(app) {
   
   app.post('/api/contacts', (req, res) => {
     const { firstName, lastName, phone } = req.body
-    return db.Contact.create({ firstName, lastName, phone })
+    // лист для валидаций
+    let arr_validate = []
+    // лист для ошибок
+    let arr_errors = []
+    arr_validate.push(validate.validate(firstName,'firstName',['required','latin']))
+    arr_validate.push(validate.validate(lastName,'lastName',['required','latin']))
+    arr_validate.push(validate.validate(phone,'phone',['required','number']))
+
+    arr_validate.forEach(element => {
+      if (element !== null) {
+        arr_errors.push(element)
+      }
+    });
+
+    if (arr_errors.length > 0 ) {
+      res.status(400).send(arr_errors)
+    }
+    else {
+      return db.Contact.create({ firstName, lastName, phone })
       .then((contact) => res.send(contact))
       .catch((err) => {
         console.log('***There was an error creating a contact', JSON.stringify(contact))
         return res.status(400).send(err)
       })
+    }    
+
   });
 
   app.delete('/api/contacts/:id', (req, res) => {
@@ -37,7 +58,7 @@ module.exports = function(app) {
     return db.Contact.findById(id)
     .then((contact) => {
       const { firstName, lastName, phone } = req.body
-      return contact.update({ firstName, lastName, phone })
+        return contact.update({ firstName, lastName, phone })
         .then(() => res.send(contact))
         .catch((err) => {
           console.log('***Error updating contact', JSON.stringify(err))
