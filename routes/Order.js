@@ -1,18 +1,28 @@
 const db = require('../models'); 
 const bodyParser = require('body-parser');
+const auth = require('../app_modules/auth');
 
 module.exports = function(app) {
     app.use(bodyParser.json());
+
+    // get all orders 
     app.get('/api/orders', (req, res) => {
-      return db.Order.findAll()
+      auth_check = auth.check(req.headers.authorization)
+      if (auth_check == null) {
+        return db.Order.findAll()
         .then((orders) => {
           res.send(orders)
         })
         .catch((err) => {
           return res.send(err.name)
         });
+      }
+      else {
+        res.send(auth_check)
+      }
     });
 
+    // add order 
     app.post('/api/orders', (req, res) => {
       let Date_now = new Date();
       let sql_date = Date_now.toISOString();
