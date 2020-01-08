@@ -3,24 +3,22 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const auth = require('../app_modules/auth');
 
+
+
 module.exports = function(app) {
     app.use(bodyParser.json());
     
+    app.use("/api/user/all", auth.permit('moder','admin'));
+
     // get all users 
-    app.get('/api/user',(req,res) => {
-      auth_check = auth.check(req.headers.authorization)
-      if (auth_check == null) {
-        return db.User.findAll()
-        .then((user) => {
-          res.send(user)
-        })
-        .catch((err) => {
-          return res.send(err.name)
-        });
-      }
-      else {
-        res.status(401).send(auth_check)
-      }
+    app.get('/api/user/all',(req,res) => {
+      return db.User.findAll()
+      .then((user) => {
+        res.send(user)
+      })
+      .catch((err) => {
+        return res.send(err.name)
+      });
     })
 
     // registration
@@ -49,7 +47,7 @@ module.exports = function(app) {
           }
           else if (bcrypt.compareSync(password, user.password)) {
             // выслать токен - пароль верный
-            res.send(auth.generate(login))
+            res.send(auth.generate(user))
           }
           else {
             // выслать ошибку - пароль не верный
