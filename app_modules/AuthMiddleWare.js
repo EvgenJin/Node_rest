@@ -2,22 +2,7 @@ const jwt = require('jsonwebtoken');
 const signature = 'MySuP3R_z3kr3t';
 const expiration = '60h';
 
-module.exports.check = function(token) {
-  if (!token) {
-    return "Не указан token в header"
-  }
-  else {
-    try {
-      let decoded = jwt.verify(token, signature);
-      if (decoded.login) {
-        return null
-      }
-    } catch(err) {
-      return err
-    }
-  }
-}
-
+// check user auth by token
 module.exports.isAuthenticated = function(req, res, next) {
   if (!req.headers.authorization) {
     res.status(401).send("Не указан token в Authorization header")
@@ -34,13 +19,8 @@ module.exports.isAuthenticated = function(req, res, next) {
   res.status(401).send("Ошибка аутентификации");
 }
 
-function containsAny(source,target)
-{
-    var result = source.filter(function(item){ return target.indexOf(item) > -1});   
-    return (result.length > 0);  
-} 
-
-module.exports.permit = function (...n_role) {
+// check user role by token
+module.exports.permitUserRole = (...n_role) => {
   return (req,res,next) => {
     if (!req.headers.authorization) {
       res.status(401).send("Не указан token в Authorization header")
@@ -61,6 +41,7 @@ module.exports.permit = function (...n_role) {
   }
 }
 
-module.exports.generate = function (login) {
-  return(jwt.sign({ login }, signature, { expiresIn: expiration }))
+// generate user token
+module.exports.generateToken = (user) => {
+  return(jwt.sign({ user }, signature, { expiresIn: expiration }))
 }

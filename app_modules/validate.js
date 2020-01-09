@@ -1,23 +1,23 @@
 module.exports.validate = function(par,par_name,args) {
-    // обязательно к заполнению
+    // required, not null
     if (args.includes('required')) {
         if (par == null || par === undefined) {
             return 'параметр ' + par_name +' не указан'
         }
     }
-    // только числа
+    // only numbers
     if (args.includes('number')) {
         if (!Number.isInteger(par)) {
             return 'параметр ' + par_name + ' должен быть числом'
         }
     }
-    // только строка
+    // only string
     if (args.includes('string')){
         if (typeof(par) !== 'string') {
             return 'параметр '+par_name + ' должен быть строкой'
         }
     }
-    // латинские символы и точка
+    // only latin symbols 
     if (args.includes('latin')) {
         if (typeof(par) !== 'string') {
             return 'параметр '+par_name + ' должен быть строкой'
@@ -26,5 +26,6 @@ module.exports.validate = function(par,par_name,args) {
                 return 'параметр '+ par_name + 'введен не корректно'
             }
     }
+    // if all checks passed
     return null;
 }
