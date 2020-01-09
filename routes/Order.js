@@ -1,11 +1,8 @@
-const db = require('../models'); 
-const bodyParser = require('body-parser');
+const db = require('../models');
 
 module.exports = function(app) {
-  app.use(bodyParser.json());
-
   // get all orders 
-  app.get('/api/orders', (req, res) => {
+  app.get('/api/orders/all', (req, res) => {
       return db.Order.findAll()
       .then((orders) => {
         res.send(orders)

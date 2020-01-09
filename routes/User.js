@@ -4,6 +4,7 @@ const db = require('../models'),
       authMW = require('../app_modules/AuthMiddleWare')
 ;
 
+
 module.exports = function(app) {
   app.use(bodyParser.json());
   require("../app_modules/RolesMiddleWare")(app);
@@ -44,6 +45,7 @@ module.exports = function(app) {
         return res.status(400).send("Пользователь с таким login не зарегистрирован")
       }
       else if (bcrypt.compareSync(password, user.password)) {
+        req.session.user = user
         // send token 
         res.send(authMW.generateToken(user))
       }
