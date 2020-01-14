@@ -22,21 +22,23 @@ module.exports.isAuthenticated = function(req, res, next) {
 // check user role by token
 module.exports.permitUserRole = (...n_role) => {
   return (req,res,next) => {
-    if (!req.headers.authorization) {
+    if (req.headers.authorization) {
+      try {
+        let decoded = jwt.verify(req.headers.authorization, signature);
+        if (!decoded.login.role) {
+          res.status(401).send("Роль пользователя " + decoded.login.login + " не опредлена")
+        }
+        if (decoded.login.role.split(',').some(r=> n_role.indexOf(r) >= 0)) {
+            return next();
+        }
+        res.send("В доступе отказано")
+      }
+      catch (err) {
+        res.status(401).send(err.message)
+      }
+    }
+    else {
       res.status(401).send("Не указан token в Authorization header")
-    }
-    try {
-      let decoded = jwt.verify(req.headers.authorization, signature);
-      if (!decoded.login.role) {
-        res.status(401).send("Роль пользователя " + decoded.login.login + " не опредлена")
-      }
-      if (decoded.login.role.split(',').some(r=> n_role.indexOf(r) >= 0)) {
-          return next();
-      }
-      res.send("В доступе отказано")
-    }
-    catch (err) {
-      res.status(401).send(err.message)
     }
   }
 }

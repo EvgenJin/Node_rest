@@ -5,10 +5,12 @@ const express = require('express'),
 
 app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
+require("./app_modules/RolesMiddleWare")(app);
 require("./routes/User")(app);
 require("./routes/Contact")(app);
 require("./routes/Order")(app);
 require("./routes/Session")(app);
+require("./routes/Customer")(app);
 
 
 // app.use(express.static(__dirname + '/static'));

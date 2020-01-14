@@ -41,7 +41,6 @@ module.exports = function(app) {
         return res.status(400).send(err)
       })
     }    
-
   });
 
   app.delete('/api/contacts/:id', (req, res) => {
