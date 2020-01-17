@@ -2,19 +2,15 @@ const db = require('../models'),
       bcrypt = require('bcrypt'),
       authMW = require('../app_modules/AuthMiddleWare')
 ;
+const UserDAO = require('../Dao/UserDAO');
 
 module.exports = function(app) {
-  // get all users
-  app.get('/api/user/all',(req,res) => {
-    return db.User.findAll()
-    .then((user) => {
-      res.send(user)
-    })
-    .catch((err) => {
-      return res.send(err.name)
-    });
-  })
 
+  app.get('/api/user/all', async (req, res) => {    //note async here
+      let user = await UserDAO.getAllUser();
+      // console.log(user[0].dataValues);
+      res.json(user);
+  });
   // registration
   app.post('/api/user/register',async (req,res) => {
     let {login, password, name} = req.body

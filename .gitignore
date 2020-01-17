@@ -1,1 +1,4 @@
 node_modules
+coverage/lcov-report/base.css
+package-lock.json
+package-lock.json
