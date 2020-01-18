@@ -25,10 +25,10 @@ module.exports.permitUserRole = (...n_role) => {
     if (req.headers.authorization) {
       try {
         let decoded = jwt.verify(req.headers.authorization, signature);
-        if (!decoded.login.role) {
-          res.status(401).send("Роль пользователя " + decoded.login.login + " не опредлена")
+        if (!decoded.user.role) {
+          res.status(401).send("Роль пользователя " + decoded.user.login + " не опредлена")
         }
-        if (decoded.login.role.split(',').some(r=> n_role.indexOf(r) >= 0)) {
+        if (decoded.user.role.split(',').some(r=> n_role.indexOf(r) >= 0)) {
             return next();
         }
         res.send("В доступе отказано")

@@ -12,14 +12,17 @@
     "nodemon": "^2.0.2",
     "sequelize": "^5.21.3",
     "sequelize-cli": "^5.5.1",
-    "sqlite3": "^4.1.1"
+    "should": "^13.2.3",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   },
   "devDependencies": {
+    "cross-env": "^6.0.3",
     "jest": "^24.9.0",
     "sequelize-mock": "^0.10.2"
   },
   "scripts": {
-    "test": "jest --forceExit --coverage --detectOpenHandles",
+    "test": "cross-env NODE_ENV=test jest --testTimeout=10000",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -31,5 +34,11 @@
   "bugs": {
     "url": "https://github.com/EvgenJin/Node_rest/issues"
   },
-  "homepage": "https://github.com/EvgenJin/Node_rest#readme"
+  "homepage": "https://github.com/EvgenJin/Node_rest#readme",
+  "jest": {
+    "testEnvironment": "node",
+    "coveragePathIgnorePatterns": [
+      "/node_modules/"
+    ]
+  }
 }

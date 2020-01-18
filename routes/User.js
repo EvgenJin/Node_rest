@@ -6,11 +6,12 @@ const UserDAO = require('../Dao/UserDAO');
 
 module.exports = function(app) {
 
+  // get all users
   app.get('/api/user/all', async (req, res) => {    //note async here
       let user = await UserDAO.getAllUser();
-      // console.log(user[0].dataValues);
       res.json(user);
   });
+
   // registration
   app.post('/api/user/register',async (req,res) => {
     let {login, password, name} = req.body
@@ -28,7 +29,7 @@ module.exports = function(app) {
         return res.status(400).send("Пользователь с таким login уже зарегистрирован")
       }
   })
-    
+
   // login
   app.post('/api/user/login',async (req,res) => {
     let {login, password} = req.body
@@ -51,5 +52,5 @@ module.exports = function(app) {
   app.get('/api/user/logout',(req,res) => {
     req.session.destroy();
     res.send("logout");
-  })  
+  })
 }
