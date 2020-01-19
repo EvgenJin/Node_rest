@@ -1,7 +1,12 @@
 const request = require("supertest");
-let should = require("should");
-let app = require("../server").app;
+const should = require("should");
+// let app = require("../server").app;
+const app = require("../server")
 let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJsb2dpbiI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkQ0htVFY2ZnJZWkt4REgvTHZDbjk3dUNnOHJTRjhncXZmTkJsanBlSVhUQTloNnptLjUwT0siLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oiLCJ1cGRhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oifSwiaWF0IjoxNTc5MzM2ODUyfQ.WjK8QlYO4FDoxY7HEWWNH4ry2k_n9AKHTRa94dFsVsA'
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+// app.use(express.bodyParser());
 
 jest.mock('../models/user', () => () => {
   const SequelizeMock = require("sequelize-mock");
@@ -31,10 +36,22 @@ describe('Test user endpoints', () => {
         done();
   });
 
+  it("register", (done) => {
+    request(app)
+    .post("/api/user/register")
+    .send({'login':'admint2222', 'password':'admin'})
+    .set('Content-Type', 'application/json')
+    .set('Accept', 'application/json')
+    .end(function(err, res) {
+      // console.log(res)
+      done();
+    })
+  })
+
   it("post /api/user/login with returning jwt", (done) => {
     request(app)
       .post("/api/user/login")
-      .send({"login":"admin", "password":"admin" })
+      .send({"login":"asdr", "password":"admin" })
       .expect(200)
       .end(function(err, res) {
         (res.text.length).should.above(300);
@@ -53,4 +70,20 @@ describe('Test user endpoints', () => {
   })
 
 })
+
+
+  // test("GET /", done => {
+  //   request(app)
+  //     .get("/api/user/all")
+  //     .expect(401)
+  //     .end(done)
+  // })
+
+  // request(app)
+  // .get("/api/user/all")
+  // .expect(response => {
+  //   expect(response.status).toBe(401)
+  //   // expect(response.body).toEqual({ name: "John Doe" })
+  //   done()
+  // })
 
