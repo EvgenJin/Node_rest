@@ -39,13 +39,20 @@ jest.mock('../models/order', () => () => {
     it("add /api/order ", (done) => {
         request(app)
         .post("/api/order")
-        .send({'date' : '2019-01-01 13:30:31' , 'amount' : 100, 'customer' : 1})
+        .send({'amount' : 100, 'customer' : 99})
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
+        .expect(200)
+        // .expect(res.body.customer_id).toEqual(1)
         .end(function(err, res) {
-          console.log(res.text)
+          (res.body.customer_id).should.equal(1);
+          (res.body.amount).should.equal(100);
+          if (err) {
+            throw (err)
+          }
           done();
         })
+
       })    
     
 })

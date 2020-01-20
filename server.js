@@ -8,9 +8,9 @@ const express = require('express'),
 app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
 require("./app_modules/RolesMiddleWare")(app);
-require("./routes/User")(app);
+require("./routes/UserRoute")(app);
 require("./routes/Contact")(app);
-require("./routes/Order")(app);
+require("./routes/OrderRoute")(app);
 require("./routes/Session")(app);
 require("./routes/Customer")(app);
 

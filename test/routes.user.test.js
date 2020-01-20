@@ -21,7 +21,7 @@ jest.mock('../models/user', () => () => {
 
 describe('Test user endpoints', () => {
 
-  it("get /api/user/all status 200 with token", async (done) => {  
+  it("get /api/user/all status 200 with token", async (done) => {
     const res = await request(app)
       .get("/api/user/all")
       .set('Authorization', jwt)
@@ -29,7 +29,7 @@ describe('Test user endpoints', () => {
         done();
   });
 
-  it("get /api/user/all status 401 without token", async (done) => {  
+  it("get /api/user/all status 401 without token", async (done) => {
     const res = await request(app)
       .get("/api/user/all")
         expect(res.statusCode).toEqual(401)

@@ -8,17 +8,11 @@ module.exports = function(app) {
 
   // get all users
   app.get('/api/user/all',function (req, res) {    //note async here
-    // try {
-    //   let user = await UserDAO.getAllUser(); 
-    //   res.json(user);
-    // }
-    // catch(e) {
-    //   res.send(e)
-    // }
-      // let user = await UserDAO.getAllUser();   
-      // res.json(user);
-      UserDAO.getAllUser().then(function (r) {return res.json(r)})
-      .catch((err) => res.status(100).send(err))
+    UserDAO.getAllUser()
+    .then(function (r) {return res.json(r)})
+    .catch((err) => {
+      res.status(500).send(err.name)
+    })
   });
 
   // registration
