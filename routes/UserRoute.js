@@ -9,7 +9,7 @@ module.exports = function(app) {
   // get all users
   app.get('/api/user/all',function (req, res) {    //note async here
     UserDAO.getAllUser()
-    .then(function (r) {return res.json(r)})
+    .then(function (data) {return res.json(data)})
     .catch((err) => {
       res.status(500).send(err.name)
     })
@@ -19,16 +19,24 @@ module.exports = function(app) {
   app.post('/api/user/register',async (req,res) => {
     let {login, password, name} = req.body
     password = bcrypt.hashSync(password, 10);
-    const user = await UserDAO.findByLogin(req.body.login)    
-    if (user == null) {
-      const created_user = await UserDAO.createUser(login,password,name)
-      return res.send(created_user.login + "зарегистрирован")
-    } else if (user.login) {
-      return res.status(400).send("Пользователь с таким login уже зарегистрирован")
-    }
-    else {
-      return res.status(400).send("Ошибка регистрации")
-    }
+    // const user = await UserDAO.findByLogin(req.body.login)    
+    UserDAO.findByLogin(req.body.login)
+    .then((user) => {
+      if (user == null) {
+        // const created_user = await UserDAO.createUser(login,password,name)
+        // return res.send(created_user.login + "зарегистрирован")
+        UserDAO.createUser(login,password,name)
+        .then(user => res.send(user.login + "зарегистрирован"))
+        .catch((err) => {
+          res.status(500).send(err.name)
+        })
+      } else if (user.login) {
+        return res.status(400).send("Пользователь с таким login уже зарегистрирован")
+      }
+      else {
+        return res.status(400).send("Ошибка регистрации")
+      }
+    })
   })
 
   // login

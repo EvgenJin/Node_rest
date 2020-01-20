@@ -5,8 +5,8 @@ module.exports = function(app) {
   // get all orders
   app.get('/api/order/all', (req, res) => {
       OrderDAO.getAllOrders()
-      .then(function(r) {
-        return res.json(r)
+      .then(function(orders) {
+        return res.json(orders)
       })
       .catch((err) => {
         return res.status(500).send(err.name)
@@ -21,8 +21,8 @@ module.exports = function(app) {
       date = Date_now.toISOString();
     }
     OrderDAO.createOrder(date, amount, customer)
-    .then((r) => {
-      return res.json(r)
+    .then((order) => {
+      return res.json(order)
     })
     .catch((err) => {
       return res.status(500).send(err.name)

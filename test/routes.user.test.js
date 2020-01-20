@@ -1,12 +1,8 @@
 const request = require("supertest");
 const should = require("should");
-// let app = require("../server").app;
 const app = require("../server")
 let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJsb2dpbiI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkQ0htVFY2ZnJZWkt4REgvTHZDbjk3dUNnOHJTRjhncXZmTkJsanBlSVhUQTloNnptLjUwT0siLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oiLCJ1cGRhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oifSwiaWF0IjoxNTc5MzM2ODUyfQ.WjK8QlYO4FDoxY7HEWWNH4ry2k_n9AKHTRa94dFsVsA'
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
 
-// app.use(express.bodyParser());
 
 jest.mock('../models/user', () => () => {
   const SequelizeMock = require("sequelize-mock");
@@ -21,19 +17,17 @@ jest.mock('../models/user', () => () => {
 
 describe('Test user endpoints', () => {
 
-  it("get /api/user/all status 200 with token", async (done) => {
-    const res = await request(app)
+  it("get /api/user/all status 200 with token", (done) => {
+      request(app)
       .get("/api/user/all")
       .set('Authorization', jwt)
-        expect(res.statusCode).toEqual(200)
-        done();
+      .expect(200,done)
   });
 
-  it("get /api/user/all status 401 without token", async (done) => {
-    const res = await request(app)
+  it("get /api/user/all status 401 without token", (done) => {
+      request(app)
       .get("/api/user/all")
-        expect(res.statusCode).toEqual(401)
-        done();
+      .expect(401,done)
   });
 
   it("register", (done) => {
@@ -42,6 +36,7 @@ describe('Test user endpoints', () => {
     .send({'login':'admint2222', 'password':'admin'})
     .set('Content-Type', 'application/json')
     .set('Accept', 'application/json')
+    .expect(400)
     .end(function(err, res) {
       // console.log(res)
       done();
@@ -62,11 +57,14 @@ describe('Test user endpoints', () => {
       })
   });
 
-  it("get /api/user/logout", async (done) => {
-    const res = await request(app)
+  it("get /api/user/logout", (done) => {
+    request(app)
     .get('/api/user/logout')
-      expect(res.text).toEqual("logout")
+    // .expect(res.text).toEqual("logout")
+    .end((err,res)=>{
+      res.text.should.equal('logout')
       done();
+    })
   })
 
 })

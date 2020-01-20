@@ -1,10 +1,8 @@
 const request = require("supertest");
 const should = require("should");
-// let app = require("../server").app;
 const app = require("../server")
 let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJsb2dpbiI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkQ0htVFY2ZnJZWkt4REgvTHZDbjk3dUNnOHJTRjhncXZmTkJsanBlSVhUQTloNnptLjUwT0siLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oiLCJ1cGRhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oifSwiaWF0IjoxNTc5MzM2ODUyfQ.WjK8QlYO4FDoxY7HEWWNH4ry2k_n9AKHTRa94dFsVsA'
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
+
 
 jest.mock('../models/order', () => () => {
     const SequelizeMock = require("sequelize-mock");
@@ -21,19 +19,17 @@ jest.mock('../models/order', () => () => {
 
   describe('Test order endpoints', () => {
 
-    it("get /api/orders/all status 200 with token", async (done) => {  
-      const res = await request(app)
+    it("get /api/orders/all status 200 with token", (done) => {  
+        request(app)
         .get("/api/order/all")
         .set('Authorization', jwt)
-          expect(res.statusCode).toEqual(200)
-          done();
+        .expect(200,done)
     });
   
-    it("get /api/orders/all status 401 without token", async (done) => {  
-      const res = await request(app)
+    it("get /api/orders/all status 401 without token", (done) => {  
+        request(app)
         .get("/api/order/all")
-          expect(res.statusCode).toEqual(401)
-          done();
+        .expect(401,done)
     });
 
     it("add /api/order ", (done) => {
