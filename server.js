@@ -3,6 +3,8 @@ const express = require('express'),
       bodyParser = require('body-parser'),
       app = express();
 
+// const apiRouter = express.Router();
+// app.use('/api',apiRouter);
 app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
 require("./app_modules/RolesMiddleWare")(app);

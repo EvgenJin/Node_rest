@@ -2,7 +2,7 @@ const db = require('../models');
 
 module.exports = function(app) {
   // get all orders
-  app.get('/api/orders/all', (req, res) => {
+  app.get('/api/order/all', (req, res) => {
       return db.Order.findAll()
       .then((orders) => {
         res.send(orders)
@@ -13,7 +13,7 @@ module.exports = function(app) {
   });
 
   // add order
-  app.post('/api/orders', (req, res) => {
+  app.post('/api/order', (req, res) => {
     let Date_now = new Date();
     let sql_date = Date_now.toISOString();
     let {date, amount, customer} = req.body

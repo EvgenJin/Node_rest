@@ -7,15 +7,23 @@ const UserDAO = require('../Dao/UserDAO');
 module.exports = function(app) {
 
   // get all users
-  app.get('/api/user/all', async (req, res) => {    //note async here
-      let user = await UserDAO.getAllUser();
-      res.json(user);
+  app.get('/api/user/all',function (req, res) {    //note async here
+    // try {
+    //   let user = await UserDAO.getAllUser(); 
+    //   res.json(user);
+    // }
+    // catch(e) {
+    //   res.send(e)
+    // }
+      // let user = await UserDAO.getAllUser();   
+      // res.json(user);
+      UserDAO.getAllUser().then(function (r) {return res.json(r)})
+      .catch((err) => res.status(100).send(err))
   });
 
   // registration
   app.post('/api/user/register',async (req,res) => {
     let {login, password, name} = req.body
-    console.log(login)
     password = bcrypt.hashSync(password, 10);
     const user = await UserDAO.findByLogin(req.body.login)    
     if (user == null) {
