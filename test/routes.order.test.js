@@ -60,7 +60,7 @@ jest.mock('../models/order', () => () => {
         .set('Accept', 'application/json')
         .expect(200)
         .end(function(err, res) {
-          console.log(res.body);
+          // console.log(res.body);
           (res.body.customer_id).should.equal(99);
           (res.body.amount).should.equal(100);
           if (err) {

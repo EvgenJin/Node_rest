@@ -9,10 +9,9 @@ app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
 require("./app_modules/RolesMiddleWare")(app);
 require("./routes/UserRoute")(app);
-require("./routes/Contact")(app);
 require("./routes/OrderRoute")(app);
-require("./routes/Session")(app);
-require("./routes/Customer")(app);
+require("./routes/SessionRoute")(app);
+require("./routes/CustomerRoute")(app);
 
 
 // app.use(express.static(__dirname + '/static'));
@@ -20,5 +19,4 @@ require("./routes/Customer")(app);
 //   console.log('Server is up on port 3000');
 // });
 
-// module.exports.app = app;
 module.exports = app
