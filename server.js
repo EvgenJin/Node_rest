@@ -13,6 +13,8 @@ require("./routes/OrderRoute")(app);
 require("./routes/SessionRoute")(app);
 require("./routes/CustomerRoute")(app);
 require("./routes/StoresRoute")(app);
+require("./routes/ManufacturerRoute")(app);
+require("./routes/ModelsRoute")(app);
 
 
 // app.use(express.static(__dirname + '/static'));

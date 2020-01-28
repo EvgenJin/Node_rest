@@ -1,9 +1,9 @@
-const StoresDao = require('../Dao/StoresDao');
+const ManufacturersDao = require('../Dao/ManufacturersDao');
 
 module.exports = function(app) {
-    // get all stores
-    app.get('/api/stores/all', (req, res) => {
-        StoresDao.getAllStores()
+    // get all
+    app.get('/api/manufacturers/all', (req, res) => {
+        ManufacturersDao.getAll()
             .then(function(data) {
                 return res.json(data)
             })
@@ -11,9 +11,9 @@ module.exports = function(app) {
                 return res.status(500).send(err.name)
             })
     });
-    // get store by id
-    app.get('/api/stores/:id',(req,res) => {
-        StoresDao.findStoreByID(req.params.id)
+    // get  by id
+    app.get('/api/manufacturers/:id',(req,res) => {
+        ManufacturersDao.findByID(req.params.id)
             .then(data => {
                 if (data == null) {
                     res.send("no data found")
@@ -25,10 +25,10 @@ module.exports = function(app) {
             .catch(err => res.status(500).send(err))
     });
 
-    // add store
-    app.post('/api/stores', (req, res) => {
-        let {name, address, chief_name, telephone, email} = req.body;
-        StoresDao.createStore({name, address, chief_name, telephone, email})
+    // add
+    app.post('/api/manufacturers', (req, res) => {
+        let {name} = req.body;
+        ManufacturersDao.create({name})
             .then((data) => {
                 return res.json(data)
             })
@@ -39,9 +39,9 @@ module.exports = function(app) {
     });
 
     // delete store
-    app.delete('/api/stores/:id', async (req, res) => {
+    app.delete('/api/manufacturers/:id', async (req, res) => {
         const id = parseInt(req.params.id);
-        let cus = await StoresDao.deleteStore(id);
-        res.json(cus);
+        let data = await ManufacturersDao.delete(id);
+        res.json(data);
     });
 };

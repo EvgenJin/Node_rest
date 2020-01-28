@@ -34,12 +34,9 @@ describe('Test order endpoints', () => {
         .send({'fio':'Fasd', 'phone':'33333', 'email':'asdad@mail.ru'})
         .set('Content-Type', 'application/json')
         .set('Accept', 'application/json')
-        .expect(400)
-        .end(function(err, res) {
-            (res.body.fio).should.equal('Fasd');
-            done();
-        })
+        .expect(200,done)
       });
+
     it("delete", (done) => {
         request(app)
         .delete('/api/customer/1')

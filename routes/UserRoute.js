@@ -53,14 +53,14 @@ module.exports = function(app) {
       else {
         res.status(400).send("Ошибка аутентификации")
       }
-  })
+  });
 
   // logout 
   app.get('/api/user/logout',(req,res) => {
     req.session.destroy();
     res.send("logout");
   })
-}
+};
 
 
   // login

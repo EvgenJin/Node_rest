@@ -27,7 +27,7 @@ module.exports = function(app) {
   });
 
   app.post('/api/customer',(req,res) => {
-    // const {fio,phone,email} = req.body;
+    const {fio,phone,email} = req.body;
     CustomerDao.createCus({fio,phone,email})
     .then(cus => {res.json(cus)})
     .catch(err => res.status(500).send(err.name))
