@@ -1,10 +1,12 @@
 const express = require('express'),
       session = require('express-session'),
       bodyParser = require('body-parser'),
+      cors = require('cors'),
       app = express();
 
 // const apiRouter = express.Router();
 // app.use('/api',apiRouter);
+app.use(cors());
 app.use(session({secret: 'ssshhhhh'}));
 app.use(bodyParser.json());
 require("./app_modules/RolesMiddleWare")(app);
