@@ -3,3 +3,4 @@ coverage/lcov-report/base.css
 package-lock.json
 package-lock.json
 coverage
+.idea

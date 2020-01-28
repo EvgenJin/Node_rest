@@ -16,7 +16,7 @@ module.exports = function(app) {
     OrderDAO.findByCustomer(req.query.customer_id)
     .then(data => res.json(data))
     .catch(err => res.status(500).send(err.name))
-  })
+  });
   // 
   app.get('/api/order/:id',(req,res) => {
     OrderDAO.getOne(req.params.id)
@@ -29,7 +29,7 @@ module.exports = function(app) {
       }
     })
     .catch(err => res.status(500).send(err))
-  })
+  });
   
   // add order
   app.post('/api/order', (req, res) => {

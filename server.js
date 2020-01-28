@@ -12,6 +12,7 @@ require("./routes/UserRoute")(app);
 require("./routes/OrderRoute")(app);
 require("./routes/SessionRoute")(app);
 require("./routes/CustomerRoute")(app);
+require("./routes/StoresRoute")(app);
 
 
 // app.use(express.static(__dirname + '/static'));
@@ -19,4 +20,4 @@ require("./routes/CustomerRoute")(app);
 //   console.log('Server is up on port 3000');
 // });
 
-module.exports = app
+module.exports = app;

@@ -1,6 +1,6 @@
 const request = require("supertest");
 const should = require("should");
-const app = require("../server")
+const app = require("../server");
 let jwt = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJsb2dpbiI6ImFkbWluIiwicGFzc3dvcmQiOiIkMmIkMTAkQ0htVFY2ZnJZWkt4REgvTHZDbjk3dUNnOHJTRjhncXZmTkJsanBlSVhUQTloNnptLjUwT0siLCJyb2xlIjoiYWRtaW4iLCJuYW1lIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oiLCJ1cGRhdGVkQXQiOiIyMDIwLTAxLTAyVDIxOjQ5OjI1Ljc5M1oifSwiaWF0IjoxNTc5MzM2ODUyfQ.WjK8QlYO4FDoxY7HEWWNH4ry2k_n9AKHTRa94dFsVsA'
 
 jest.mock('../models/customer', () => () => {
@@ -26,7 +26,7 @@ describe('Test order endpoints', () => {
         // //     if (err) { throw (err)}                  
         //     done();
         // })
-    })
+    });
 
     it("register", (done) => {
         request(app)
@@ -39,13 +39,10 @@ describe('Test order endpoints', () => {
             (res.body.fio).should.equal('Fasd');
             done();
         })
-      })
+      });
     it("delete", (done) => {
         request(app)
         .delete('/api/customer/1')
-        .end(function(err,res) {
-            (res.body.id).should.equal(1)
-            done();
-        })        
+        .expect(200,done)
     })   
-})    
+});

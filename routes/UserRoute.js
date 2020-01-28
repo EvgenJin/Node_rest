@@ -17,7 +17,7 @@ module.exports = function(app) {
 
   // registration
   app.post('/api/user/register',async (req,res) => {
-    let {login, password, name} = req.body
+    let {login, password, name} = req.body;
     password = bcrypt.hashSync(password, 10);
     // const user = await UserDAO.findByLogin(req.body.login)    
     UserDAO.findByLogin(req.body.login)
@@ -37,7 +37,7 @@ module.exports = function(app) {
         return res.status(400).send("Ошибка регистрации")
       }
     })
-  })
+  });
 
   // login
   app.post('/api/user/login',async (req,res) => {

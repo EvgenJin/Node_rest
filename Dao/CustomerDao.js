@@ -14,7 +14,7 @@ module.exports = {
     },
     createCus: function(cus) {
       return new Promise((resolve,reject) => {
-        const { fio, email, phone } = cus
+        const { fio, email, phone } = cus;
         db.Customer.create({ fio, email, phone })
         .then((cus) => {
           resolve(cus)
@@ -48,4 +48,4 @@ module.exports = {
 
     }      
 
-}
+};

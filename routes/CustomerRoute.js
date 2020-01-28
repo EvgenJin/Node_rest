@@ -11,18 +11,31 @@ module.exports = function(app) {
     .catch((err) => {
       return res.status(500).send(err.name)
     })
-  })
+  });
+
+  app.get('/api/customer/:id',(req,res) => {
+    CustomerDao.findCusByID(req.params.id)
+        .then(data => {
+          if (data == null) {
+            res.send("no data found")
+          }
+          else {
+            res.json(data)
+          }
+        })
+        .catch(err => res.status(500).send(err))
+  });
 
   app.post('/api/customer',(req,res) => {
-    const {fio,phone,email} = req.body
+    // const {fio,phone,email} = req.body;
     CustomerDao.createCus({fio,phone,email})
     .then(cus => {res.json(cus)})
     .catch(err => res.status(500).send(err.name))
-  })
+  });
 
   app.delete('/api/customer/:id', async (req, res) => {
-    const id = parseInt(req.params.id)
-    let cus = await CustomerDao.deleteCus(id)
+    const id = parseInt(req.params.id);
+    let cus = await CustomerDao.deleteCus(id);
     res.json(cus)
     // return db.Contact.findById(id)
     //   .then((contact) => contact.destroy({ force: true }))
@@ -32,4 +45,4 @@ module.exports = function(app) {
     //     res.status(400).send(err)
     //   })
   });  
-}
+};
