@@ -41,13 +41,14 @@ module.exports = function(app) {
 
   // login
   app.post('/api/user/login',async (req,res) => {
-      let {login,password} = req.body
-      const user = await UserDAO.findByLogin(login)
+      console.log(req.body);
+      let {login,password} = req.body;
+      const user = await UserDAO.findByLogin(login);
       if (user == null) {
-        return res.status(400).send("Пользователь" + login + "не зарегистрирован")
+        return res.status(403).send("Пользователь " + login + " не зарегистрирован")
       }
       else if (bcrypt.compareSync(password, user.password)) {
-        req.session.user = user.login
+        req.session.user = user.login;
         res.send(authMW.generateToken(user))
       }
       else {

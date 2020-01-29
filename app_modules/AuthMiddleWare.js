@@ -46,4 +46,4 @@ module.exports.permitUserRole = (...n_role) => {
 // generate user token
 module.exports.generateToken = (user) => {
   return(jwt.sign({ user }, signature, { expiresIn: expiration }))
-}
+};
