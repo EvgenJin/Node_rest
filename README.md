@@ -1,14 +1,18 @@
 # Node_rest
-This is rest api by node js with jwt authentification, role-based route control on sqlite3 and mock tests api endpoints
+This is rest api for boost start by node js with jwt authentification, role-based route control on sqlite3 with sequelize orm and mock tests api endpoints  
+Базовый рест сервер для резкого старта разработки с jwt токенами, разделением доступа по роутам между ролями, с тестами по рестовым методам и подготовленной базой sqlite3 c sequelize.  
 
+how to run  
 npm install  
 npm start  
-send request to localhost:3000/api/...
+send post to localhost:3000/api/login  with body {"login": "admin","password": "admin:}, response return to you jwt token  
+add jwt to use rest api  
 
 to test  
 npm test
 
-win7
+
+win7 sequilize
 node_modules\.bin\sequelize migration:generate --name user_add_name  
 node_modules\.bin\sequelize db:migrate  
 node_modules\.bin\sequelize model:generate --name Products --attributes model:string,manufacturer_id:integer,serial_num:string,inventory_num:string,ip_addr:string,store_id:integer  
