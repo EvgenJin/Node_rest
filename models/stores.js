@@ -8,7 +8,8 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING
   }, {});
   Stores.associate = function(models) {
-    // associations can be defined here
+    Stores.belongsTo(models.Transfers,{ foreignKey: 'id'});
+    Stores.belongsTo(models.Products,{ foreignKey: 'id'});
   };
   return Stores;
 };

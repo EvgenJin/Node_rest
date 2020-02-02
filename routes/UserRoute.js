@@ -1,19 +1,30 @@
-const db = require('../models'),
-      bcrypt = require('bcrypt'),
-      authMW = require('../app_modules/AuthMiddleWare')
+const
+        bcrypt = require('bcrypt'),
+        authMW = require('../app_modules/AuthMiddleWare'),
+        UserDAO = require('../Dao/UserDAO')
 ;
-const UserDAO = require('../Dao/UserDAO');
 
 module.exports = function(app) {
 
-  // get all users
-  app.get('/api/user/all',function (req, res) {    //note async here
-    UserDAO.getAllUser()
-    .then(function (data) {return res.json(data)})
-    .catch((err) => {
-      res.status(500).send(err.name)
-    })
-  });
+    // get all users
+    app.get('/api/user/all',function (req, res) {
+        UserDAO.getAllUser()
+        .then(function (data) {return res.json(data)})
+        .catch((err) => {
+          res.status(500).send(err.name)
+        })
+    });
+
+    app.get('/api/user/:login',function (req,res) {
+        console.log(req.params.login);
+        UserDAO.findByLogin(req.params.login)
+        .then(function (data) {
+            return res.json(data)
+        })
+        .catch((err) => {
+            res.status(500).send(err.name)
+        })
+    });
 
   // registration
   app.post('/api/user/register',async (req,res) => {
@@ -49,7 +60,9 @@ module.exports = function(app) {
       }
       else if (bcrypt.compareSync(password, user.password)) {
         req.session.user = user.login;
-        res.send(authMW.generateToken(user))
+        user.dataValues.jwt = authMW.generateToken(user);
+        res.send(user);
+        // res.send(authMW.generateToken(user));
       }
       else {
         res.status(400).send("Ошибка аутентификации")

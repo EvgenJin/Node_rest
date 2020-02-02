@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
     date_end:DataTypes.DATE
   }, {});
   Models.associate = function(models) {
-    // associations can be defined here
   };
   return Models;
 };

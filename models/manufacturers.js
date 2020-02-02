@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING
   }, {});
   Manufacturers.associate = function(models) {
-    // associations can be defined here
+    Manufacturers.belongsTo(models.Products,{ foreignKey: 'id'});
   };
   return Manufacturers;
 };
