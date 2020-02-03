@@ -14,7 +14,7 @@ module.exports = function(app) {
           res.status(500).send(err.name)
         })
     });
-
+    // get user by login
     app.get('/api/user/:login',function (req,res) {
         console.log(req.params.login);
         UserDAO.findByLogin(req.params.login)
@@ -52,7 +52,6 @@ module.exports = function(app) {
 
   // login
   app.post('/api/user/login',async (req,res) => {
-      console.log(req.body);
       let {login,password} = req.body;
       const user = await UserDAO.findByLogin(login);
       if (user == null) {
@@ -62,7 +61,6 @@ module.exports = function(app) {
         req.session.user = user.login;
         user.dataValues.jwt = authMW.generateToken(user);
         res.send(user);
-        // res.send(authMW.generateToken(user));
       }
       else {
         res.status(400).send("Ошибка аутентификации")
