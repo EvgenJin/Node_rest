@@ -51,6 +51,18 @@ module.exports = {
                 })
         })
     },
+    updateProduct: function(data) {
+        return new Promise(((resolve, reject) => {
+            this.findProductByID(data.id)
+                .then(product => {
+                    product.update(data);
+                    resolve(data)
+                })
+                .catch((err) => {
+                    reject(err)
+            })
+        }));
+    },
     deleteProduct: function(id) {
         this.findProductByID(id)
             .then(product => product.destroy({force:true}))
