@@ -60,8 +60,33 @@ module.exports = function(app) {
             })
     });
 
+    app.put('/api/products/:id', (req, res) => {
+        // const id = parseInt(req.params.id);
+        ProductsDao.updateProduct(req.body)
+            .then((data) => {
+                console.log(data);
+                return res.json(data)
+            })
+            .catch((err) => {
+                console.log(err);
+                return res.status(500).send(err)
+            })
+        // const id = parseInt(req.params.id)
+        // return db.Products.findById(id)
+        //     .then((product) => {
+        //         const { firstName, lastName, phone } = req.body
+        //         return product.update({ firstName, lastName, phone })
+        //             .then(() => res.send(product))
+        //             .catch((err) => {
+        //                 console.log('***Error updating contact', JSON.stringify(err))
+        //                 res.status(400).send(err)
+        //             })
+        //     })
+    });
+
+
     // delete store
-    app.delete('/api/stores/:id', async (req, res) => {
+    app.delete('/api/products/:id', async (req, res) => {
         const id = parseInt(req.params.id);
         let cus = await StoresDao.deleteStore(id);
         res.json(cus);
