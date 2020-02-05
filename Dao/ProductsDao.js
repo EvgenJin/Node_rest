@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllProducts: function () {
+    getAll: function () {
         return new Promise((resolve,reject) => {
             db.Products.findAll({
                 include: [
@@ -15,12 +15,12 @@ module.exports = {
                     resolve(data);
                 })
                 .catch((err) => {
-                    console.log(err)
+                    console.log(err);
                     reject(err.name);
                 })
         })
     },
-    createProduct: function(data) {
+    create: function(data) {
         return new Promise((resolve,reject) => {
             db.Products.create(data)
                 .then((data) => {
@@ -31,7 +31,7 @@ module.exports = {
                 })
         })
     },
-    findProductByID: function(id) {
+    findByID: function(id) {
         return new Promise((resolve,reject) => {
             db.Products.findByPk(id,{include: [
                     {
@@ -51,9 +51,9 @@ module.exports = {
                 })
         })
     },
-    updateProduct: function(data) {
+    update: function(data) {
         return new Promise(((resolve, reject) => {
-            this.findProductByID(data.id)
+            this.findByID(data.id)
                 .then(product => {
                     product.update(data);
                     resolve(data)
@@ -64,7 +64,7 @@ module.exports = {
         }));
     },
     deleteProduct: function(id) {
-        this.findProductByID(id)
+        this.findByID(id)
             .then(product => product.destroy({force:true}))
     }
 };

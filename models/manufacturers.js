@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Manufacturers.associate = function(models) {
     Manufacturers.belongsTo(models.Products,{ foreignKey: 'id'});
+    Manufacturers.belongsTo(models.Models,{ foreignKey: 'id'});
   };
   return Manufacturers;
 };

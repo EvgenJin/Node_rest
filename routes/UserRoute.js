@@ -5,10 +5,9 @@ const
 ;
 
 module.exports = function(app) {
-
     // get all users
     app.get('/api/user/all',function (req, res) {
-        UserDAO.getAllUser()
+        UserDAO.getAll()
         .then(function (data) {return res.json(data)})
         .catch((err) => {
           res.status(500).send(err.name)
@@ -25,12 +24,11 @@ module.exports = function(app) {
             res.status(500).send(err.name)
         })
     });
-
-  // registration
-  app.post('/api/user/register',async (req,res) => {
+    // registration
+    app.post('/api/user/register',async (req,res) => {
     let {login, password, name} = req.body;
     password = bcrypt.hashSync(password, 10);
-    // const user = await UserDAO.findByLogin(req.body.login)    
+    // const user = await UserDAO.findByLogin(req.body.login)
     UserDAO.findByLogin(req.body.login)
     .then((user) => {
       if (user == null) {
@@ -48,10 +46,10 @@ module.exports = function(app) {
         return res.status(400).send("Ошибка регистрации")
       }
     })
-  });
+    });
 
-  // login
-  app.post('/api/user/login',async (req,res) => {
+    // login
+    app.post('/api/user/login',async (req,res) => {
       let {login,password} = req.body;
       const user = await UserDAO.findByLogin(login);
       if (user == null) {
@@ -65,13 +63,13 @@ module.exports = function(app) {
       else {
         res.status(400).send("Ошибка аутентификации")
       }
-  });
+    });
 
-  // logout 
-  app.get('/api/user/logout',(req,res) => {
-    req.session.destroy();
-    res.send("logout");
-  })
+    // logout
+    app.get('/api/user/logout',(req,res) => {
+        req.session.destroy();
+        res.send("logout");
+    })
 };
 
 

@@ -4,7 +4,7 @@ module.exports = function(app) {
   require("../app_modules/RolesMiddleWare")(app);  
   // get all customers
   app.get('/api/customer/all', (req, res) => {
-    CustomerDao.getAllCus()
+    CustomerDao.getAll()
     .then(function(cus) {
       return res.json(cus)
     })
@@ -14,7 +14,7 @@ module.exports = function(app) {
   });
 
   app.get('/api/customer/:id',(req,res) => {
-    CustomerDao.findCusByID(req.params.id)
+    CustomerDao.findByID(req.params.id)
         .then(data => {
           if (data == null) {
             res.send("no data found")
@@ -28,7 +28,7 @@ module.exports = function(app) {
 
   app.post('/api/customer',(req,res) => {
     const {fio,phone,email} = req.body;
-    CustomerDao.createCus({fio,phone,email})
+    CustomerDao.create({fio,phone,email})
     .then(cus => {res.json(cus)})
     .catch(err => res.status(500).send(err.name))
   });

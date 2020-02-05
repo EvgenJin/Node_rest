@@ -6,6 +6,9 @@ module.exports = (sequelize, DataTypes) => {
     date_end:DataTypes.DATE
   }, {});
   Models.associate = function(models) {
+    Models.belongsTo(models.Manufacturers,{
+      as:"man_info",foreignKey: 'manufacturer_id'
+    });
   };
   return Models;
 };

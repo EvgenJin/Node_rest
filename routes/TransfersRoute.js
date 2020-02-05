@@ -3,7 +3,7 @@ const TransfersDao = require('../Dao/TransfersDao');
 module.exports = function(app) {
     // get all stores
     app.get('/api/transfers/all', (req, res) => {
-        TransfersDao.getAllTransfers()
+        TransfersDao.getAll()
             .then(function(data) {
                 return res.json(data);
             })
@@ -13,7 +13,7 @@ module.exports = function(app) {
     });
     // get transfers by id
     app.get('/api/transfers/:id',(req,res) => {
-        TransfersDao.findTransferByID(req.params.id)
+        TransfersDao.findByID(req.params.id)
             .then(data => {
                 if (data == null) {
                     res.send("no data found")
@@ -27,7 +27,7 @@ module.exports = function(app) {
     // delete store
     app.delete('/api/transfers/:id', async (req, res) => {
         const id = parseInt(req.params.id);
-        let transfer = await TransfersDao.deleteTransfer(id);
+        let transfer = await TransfersDao.delete(id);
         res.json(transfer);
     });
 };

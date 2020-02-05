@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllOrders: function () {
+    getAll: function () {
       return new Promise((resolve,reject) => {
         db.Order.findAll()
         .then((order) => {
@@ -12,9 +12,9 @@ module.exports = {
         })
       })
     },
-    getOne:function(id) {
+    findByID:function(id) {
       return new Promise((resolve,reject) => {
-        db.Order.findOne({where:{id:id}})
+        db.Order.findByPk(id)
         .then((order) => {
           resolve(order)
         })
@@ -32,7 +32,7 @@ module.exports = {
         })
       })
     },
-    createOrder: function(date, amount, customer_id) {
+    create: function(date, amount, customer_id) {
       return new Promise((resolve,reject) => {
         db.Order.create({date, amount, customer_id})
         .then((res) => {
@@ -43,4 +43,4 @@ module.exports = {
         })
       })
     }
-}
+};

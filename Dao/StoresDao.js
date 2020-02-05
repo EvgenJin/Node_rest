@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllStores: function () {
+    getAll: function () {
         return new Promise((resolve,reject) => {
             db.Stores.findAll()
                 .then((data) => {
@@ -12,7 +12,7 @@ module.exports = {
                 })
         })
     },
-    createStore: function(data) {
+    create: function(data) {
         return new Promise((resolve,reject) => {
             // const { name, address, chief_name, telephone, email } = store;
             db.Stores.create(data)
@@ -24,9 +24,9 @@ module.exports = {
                 })
         })
     },
-    findStoreByID: function(id) {
+    findByID: function(id) {
         return new Promise((resolve,reject) => {
-            db.Stores.findById(id)
+            db.Stores.findByPk(id)
                 .then(data => {
                     resolve(data)
                 })
@@ -35,9 +35,8 @@ module.exports = {
                 })
         })
     },
-    deleteStore: function(id) {
+    delete: function(id) {
         this.findStoreByID(id)
             .then(store => store.destroy({force:true}))
     }
-
 };

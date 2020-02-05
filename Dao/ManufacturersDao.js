@@ -25,7 +25,7 @@ module.exports = {
     },
     findByID: function(id) {
         return new Promise((resolve,reject) => {
-            db.Manufacturers.findById(id)
+            db.Manufacturers.findByPk(id)
                 .then(data => {
                     resolve(data)
                 })
@@ -38,5 +38,4 @@ module.exports = {
         this.findStoreByID(id)
             .then(data => data.destroy({force:true}))
     }
-
 };

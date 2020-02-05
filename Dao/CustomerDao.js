@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllCus: function () {
+    getAll: function () {
       return new Promise((resolve,reject) => {
         db.Customer.findAll()
         .then((cus) => {
@@ -12,9 +12,8 @@ module.exports = {
         })
       })
     },
-    createCus: function(cus) {
+    create: function(cus) {
       return new Promise((resolve,reject) => {
-        // const { fio, email, phone } = cus;
         db.Customer.create(cus)
         .then((cus) => {
           resolve(cus)
@@ -24,9 +23,9 @@ module.exports = {
         })
       })
     },
-    findCusByID: function(id) {
+    findByID: function(id) {
       return new Promise((resolve,reject) => {
-        db.Customer.findById(id)
+        db.Customer.findByPk(id)
         .then(cus => {
           resolve(cus)
         })
@@ -38,14 +37,5 @@ module.exports = {
     deleteCus: function(id) {
       this.findCusByID(id)
       .then(cus => cus.destroy({force:true}))
-      // return new Promise((resolve,reject) => {
-      //   this.findCusByID(id)
-      //   .then((cus) => resolve(cus.destroy({force:true})))
-      //   .catch(err => {
-      //     reject (err)
-      //   })
-      // })
-
-    }      
-
+    }
 };

@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllTransfers: function () {
+    getAll: function () {
         return new Promise((resolve,reject) => {
             db.Products.hasOne(db.Transfers, {foreignKey: 'product_id'});
             db.Transfers.findAll({
@@ -41,9 +41,9 @@ module.exports = {
                 })
         })
     },
-    findTransferByID: function(id) {
+    findByID: function(id) {
         return new Promise((resolve,reject) => {
-            db.Transfers.findById(id)
+            db.Transfers.findByPk(id)
                 .then(data => {
                     resolve(data)
                 })
@@ -52,9 +52,8 @@ module.exports = {
                 })
         })
     },
-    deleteTransfer: function(id) {
+    delete: function(id) {
         this.findTransferByID(id)
             .then(store => store.destroy({force:true}))
     }
-
 };

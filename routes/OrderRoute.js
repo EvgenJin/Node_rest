@@ -3,7 +3,7 @@ const OrderDAO = require('../Dao/OrderDao');
 module.exports = function(app) {
   // get all orders
   app.get('/api/order/all', (req, res) => {
-      OrderDAO.getAllOrders()
+      OrderDAO.getAll()
       .then(function(orders) {
         return res.json(orders)
       })
@@ -19,7 +19,7 @@ module.exports = function(app) {
   });
   // 
   app.get('/api/order/:id',(req,res) => {
-    OrderDAO.getOne(req.params.id)
+    OrderDAO.findByID(req.params.id)
     .then(data => {
       if (data == null) {
         res.send("no data found")
@@ -38,13 +38,13 @@ module.exports = function(app) {
     if (!date) {
       date = Date_now.toISOString();
     }
-    OrderDAO.createOrder(date, amount, customer_id)
+    OrderDAO.create(date, amount, customer_id)
     .then((order) => {
       return res.json(order)
     })
     .catch((err) => {
-      console.log(err)
+      console.log(err);
       return res.status(500).send(err)
     })
   });      
-}
+};

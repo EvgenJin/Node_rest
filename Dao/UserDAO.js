@@ -1,7 +1,7 @@
 const db = require('../models');
 
 module.exports = {
-    getAllUser: function () {
+    getAll: function () {
       return new Promise((resolve,reject) => {
         db.User.findAll()
         .then((user) => {
@@ -30,5 +30,4 @@ module.exports = {
         })
       })
     }
-
 };

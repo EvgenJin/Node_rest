@@ -4,7 +4,7 @@ const ProductsDao = require('../Dao/ProductsDao');
 module.exports = function(app) {
     // get all stores
     app.get('/api/products/all', (req, res) => {
-        ProductsDao.getAllProducts()
+        ProductsDao.getAll()
             .then(function(data) {
                 console.log(222);
                 return res.json(data)
@@ -15,7 +15,7 @@ module.exports = function(app) {
     });
     // get store by id
     app.get('/api/products/:id',(req,res) => {
-        ProductsDao.findProductByID(req.params.id)
+        ProductsDao.findByID(req.params.id)
             .then(data => {
                 if (data == null) {
                     res.send("no data found")
@@ -43,15 +43,19 @@ module.exports = function(app) {
             store_to: req.body.store_to,
             code: 'add',
             tr_date: new Date(),
-            user: req.body.user
+            user: req.body.user.login
         };
-        ProductsDao.createProduct(product)
+        ProductsDao.create(product)
             .then((data) => {
                 trans.product_id = data.id;
                 TransfersDao.createTransfer(trans)
                 .then((data) => {
                     console.log(data);
                     return res.json(data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                    return res.status(500).send(err)
                 })
             })
             .catch((err) => {
@@ -62,7 +66,7 @@ module.exports = function(app) {
 
     app.put('/api/products/:id', (req, res) => {
         // const id = parseInt(req.params.id);
-        ProductsDao.updateProduct(req.body)
+        ProductsDao.update(req.body)
             .then((data) => {
                 console.log(data);
                 return res.json(data)
