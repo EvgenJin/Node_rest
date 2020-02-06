@@ -3,7 +3,11 @@ const db = require('../models');
 module.exports = {
     getAll: function () {
         return new Promise((resolve,reject) => {
-            db.Manufacturers.findAll()
+            db.Manufacturers.findAll({
+                order: [
+                    ['name', 'ASC']
+                ]
+            })
                 .then((data) => {
                     resolve(data);
                 })
