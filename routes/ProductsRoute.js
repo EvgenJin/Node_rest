@@ -35,8 +35,9 @@ module.exports = function(app) {
            ,serial_num:req.body.serial_num
            ,inventory_num:req.body.inventory_num
            ,ip_addr:req.body.ip_addr
+           ,mac_addr:req.body.mac_addr
            ,store_id:req.body.store_to
-           // ,type_id:req.body.store_id
+           ,type_id:req.body.type_id
         };
         let trans = {
             store_from:null,

@@ -8,6 +8,14 @@ module.exports = {
                     {
                         model:db.Manufacturers,
                         as: "man_info"
+                    },
+                    {
+                        model:db.Stores,
+                        as: "store_info"
+                    },
+                    {
+                        model:db.ProductTypes,
+                        as: "type_info"
                     }
                 ]
             })

@@ -19,6 +19,7 @@ require("./routes/ManufacturerRoute")(app);
 require("./routes/ModelsRoute")(app);
 require("./routes/TransfersRoute")(app);
 require("./routes/ProductsRoute")(app);
+require("./routes/ProductTypes")(app);
 
 
 // app.use(express.static(__dirname + '/static'));

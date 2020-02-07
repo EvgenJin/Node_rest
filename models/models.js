@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     Models.belongsTo(models.Manufacturers,{
       as:"man_info",foreignKey: 'manufacturer_id'
     });
+    Models.belongsTo(models.ProductTypes,{
+      as:"types_info",foreignKey: 'type_id'
+    });
   };
   return Models;
 };

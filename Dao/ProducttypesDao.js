@@ -3,16 +3,9 @@ const db = require('../models');
 module.exports = {
     getAll: function () {
         return new Promise((resolve,reject) => {
-            db.Models.findAll({
-                include: [
-                    {
-                        model:db.Manufacturers,
-                        as: "man_info"
-                    },
-                    {
-                        model:db.ProductTypes,
-                        as: "types_info"
-                    },
+            db.ProductTypes.findAll({
+                order: [
+                    ['name', 'ASC']
                 ]
             })
                 .then((data) => {
@@ -25,7 +18,7 @@ module.exports = {
     },
     create: function(data) {
         return new Promise((resolve,reject) => {
-            db.Models.create(data)
+            db.ProductTypes.create(data)
                 .then((data) => {
                     resolve(data)
                 })
@@ -36,7 +29,7 @@ module.exports = {
     },
     findByID: function(id) {
         return new Promise((resolve,reject) => {
-            db.Models.findByPk(id)
+            db.ProductTypes.findByPk(id)
                 .then(data => {
                     resolve(data)
                 })
@@ -46,7 +39,7 @@ module.exports = {
         })
     },
     delete: function(id) {
-        this.findStoreByID(id)
+        this.findByID(id)
             .then(data => data.destroy({force:true}))
     }
 };

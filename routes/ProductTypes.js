@@ -1,9 +1,13 @@
-const ModelsDao = require('../Dao/ModelsDao');
+const ProducttypesDao = require('../Dao/ProducttypesDao');
 
 module.exports = function(app) {
     // get all
-    app.get('/api/models/all', (req, res) => {
-        ModelsDao.getAll()
+    app.get('/api/producttypes/all', (req, res) => {
+        ProducttypesDao.getAll({
+            order: [
+                ['name', 'ASC']
+            ]
+        })
             .then(function(data) {
                 return res.json(data)
             })
@@ -12,8 +16,8 @@ module.exports = function(app) {
             })
     });
     // get  by id
-    app.get('/api/models/:id',(req,res) => {
-        ModelsDao.findByID(req.params.id)
+    app.get('/api/producttypes/:id',(req,res) => {
+        ProducttypesDao.findByID(req.params.id)
             .then(data => {
                 if (data == null) {
                     res.send("no data found")
@@ -26,14 +30,9 @@ module.exports = function(app) {
     });
 
     // add
-    app.post('/api/models', (req, res) => {
-        // let {name,manufacturer_id,type_id} = req.body;
-        let model = {
-          name:req.body.name,
-          manufacturer_id:req.body.manufacturer_id,
-          type_id:req.body.type_id,
-        };
-        ModelsDao.create(model)
+    app.post('/api/producttypes', (req, res) => {
+        let {name} = req.body;
+        ProducttypesDao.create({name})
             .then((data) => {
                 return res.json(data)
             })
@@ -44,9 +43,9 @@ module.exports = function(app) {
     });
 
     // delete store
-    app.delete('/api/models/:id', async (req, res) => {
+    app.delete('/api/producttypes/:id', async (req, res) => {
         const id = parseInt(req.params.id);
-        let data = await ModelsDao.delete(id);
+        let data = await ManufacturersDao.delete(id);
         res.json(data);
     });
 };
