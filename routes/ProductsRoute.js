@@ -69,7 +69,7 @@ module.exports = function(app) {
         // const id = parseInt(req.params.id);
         ProductsDao.update(req.body)
             .then((data) => {
-                console.log(data);
+                console.log('asdasdasdasdadad');
                 return res.json(data)
             })
             .catch((err) => {
