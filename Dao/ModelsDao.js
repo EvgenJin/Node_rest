@@ -36,7 +36,18 @@ module.exports = {
     },
     findByID: function(id) {
         return new Promise((resolve,reject) => {
-            db.Models.findByPk(id)
+            db.Models.findByPk(id,{
+                include: [
+                    {
+                        model:db.Manufacturers,
+                        as: "man_info"
+                    },
+                    {
+                        model:db.ProductTypes,
+                        as: "types_info"
+                    },
+                ]
+            })
                 .then(data => {
                     resolve(data)
                 })

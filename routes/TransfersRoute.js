@@ -1,7 +1,8 @@
+const ProductsDao = require("../Dao/ProductsDao");
 const TransfersDao = require('../Dao/TransfersDao');
 
 module.exports = function(app) {
-    // get all stores
+    // get all
     app.get('/api/transfers/all', (req, res) => {
         TransfersDao.getAll()
             .then(function(data) {
@@ -19,7 +20,7 @@ module.exports = function(app) {
                     res.send("no data found")
                 }
                 else {
-                    res.json(data)
+                   res.json(data)
                 }
             })
             .catch(err => res.status(500).send(err))

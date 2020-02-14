@@ -2,32 +2,47 @@ const db = require('../models');
 
 module.exports = {
     getAll: function () {
-        return new Promise((resolve,reject) => {
-            db.Products.findAll({
-                include: [
-                    {
-                        model:db.Manufacturers,
-                        as: "man_info"
-                    },
-                    {
-                        model:db.Stores,
-                        as: "store_info"
-                    },
-                    {
-                        model:db.ProductTypes,
-                        as: "type_info"
-                    }
-                ]
-            })
-                .then((data) => {
-                    resolve(data);
+        return new Promise((resolve,reject)=>{
+            db.vw_products.findAll()
+                .then((res)=>{
+                    resolve(res)
                 })
-                .catch((err) => {
-                    console.log(err);
-                    reject(err.name);
+                .catch((err)=> {
+                    reject(err.name)
                 })
         })
     },
+    // getAll: function () {
+    //     return new Promise((resolve,reject) => {
+    //         db.Products.findAll({
+    //             include: [
+    //                 {
+    //                     model:db.Manufacturers,
+    //                     as: "man_info"
+    //                 },
+    //                 {
+    //                     model:db.Stores,
+    //                     as: "store_info"
+    //                 },
+    //                 {
+    //                     model:db.ProductTypes,
+    //                     as: "type_info"
+    //                 },
+    //                 {
+    //                     model:db.Models,
+    //                     as: "model_info"
+    //                 }
+    //             ]
+    //         })
+    //             .then((data) => {
+    //                 resolve(data);
+    //             })
+    //             .catch((err) => {
+    //                 console.log(err);
+    //                 reject(err.name);
+    //             })
+    //     })
+    // },
     create: function(data) {
         return new Promise((resolve,reject) => {
             db.Products.create(data)
@@ -49,6 +64,14 @@ module.exports = {
                     {
                         model:db.Stores,
                         as: "store_info"
+                    },
+                    {
+                        model:db.ProductTypes,
+                        as: "type_info"
+                    },
+                    {
+                        model:db.Models,
+                        as: "model_info"
                     }
                 ]})
                 .then(data => {

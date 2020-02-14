@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const signature = 'MySuP3R_z3kr3t';
-const expiration = '60h';
+const expiration = '6h';
 
 // check user auth by token
 module.exports.isAuthenticated = function(req, res, next) {

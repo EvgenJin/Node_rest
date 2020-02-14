@@ -1,12 +1,12 @@
 const TransfersDao = require ('../Dao/TransfersDao');
 const ProductsDao = require('../Dao/ProductsDao');
 
+
 module.exports = function(app) {
-    // get all stores
+    // get all
     app.get('/api/products/all', (req, res) => {
         ProductsDao.getAll()
             .then(function(data) {
-                console.log(222);
                 return res.json(data)
             })
             .catch((err) => {
@@ -30,14 +30,13 @@ module.exports = function(app) {
     // add store
     app.post('/api/products', (req, res) => {
         let product = {
-            model:req.body.model
-           ,manufacturer_id:req.body.manufacturer_id
+            model_id:req.body.model_id
            ,serial_num:req.body.serial_num
            ,inventory_num:req.body.inventory_num
            ,ip_addr:req.body.ip_addr
            ,mac_addr:req.body.mac_addr
            ,store_id:req.body.store_to
-           ,type_id:req.body.type_id
+           ,user: req.body.user
         };
         let trans = {
             store_from:null,
@@ -51,7 +50,6 @@ module.exports = function(app) {
                 trans.product_id = data.id;
                 TransfersDao.createTransfer(trans)
                 .then((data) => {
-                    console.log(data);
                     return res.json(data)
                 })
                 .catch((err) => {
